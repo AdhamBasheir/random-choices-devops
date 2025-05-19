@@ -82,7 +82,8 @@ function displayResult(randomChoices) {
 
     randomChoices.forEach(randomChoice => {
         const li = document.createElement('li');
-        li.innerHTML = `${randomChoice.name}: ${randomChoice.count} time(s)`;
+        const timeText = randomChoice.count === 1 ? 'time' : 'times';
+        li.innerHTML = `${randomChoice.name}: ${randomChoice.count} ${timeText}`;
         ul.appendChild(li);
     });
 
