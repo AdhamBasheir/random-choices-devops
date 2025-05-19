@@ -18,12 +18,20 @@ function resetForm() {
     document.getElementById('result').innerHTML = '';
 }
 
-// Function to submit the form and fetch random names
-async function submitForm() {
-    const nameInputs = document.querySelectorAll('.name-input');
-    const numberInput = document.getElementById('number').value;
+// Function to validate input and submit the form
+function validateAndSubmit() {
+    const numberInput = document.getElementById('number').value.trim();
+    const resultDiv = document.getElementById('result');
+    resultDiv.style.color = 'red';
 
-    // Gather names from input fields, ignoring empty fields
+    const count = Number(numberInput);
+
+    if (!Number.isInteger(count) || count <= 0) {
+        resultDiv.innerHTML = 'The number must be a positive integer';
+        return;
+    }
+
+    const nameInputs = document.querySelectorAll('.name-input');
     const names = [];
     nameInputs.forEach(input => {
         const name = input.value.trim();
@@ -32,13 +40,16 @@ async function submitForm() {
         }
     });
 
-    // Handle case when there are no valid names entered
     if (names.length === 0) {
-        document.getElementById('result').innerHTML = 'Please enter at least one name.';
+        resultDiv.innerHTML = 'Please enter at least one name';
         return;
     }
 
-    // Send data to the backend API
+    submitForm(names, count);
+}
+
+// Function to handle form submission
+async function submitForm(names, count) {
     const response = await fetch(`${API_URL}/randomize`, {
         method: 'POST',
         headers: {
@@ -46,13 +57,11 @@ async function submitForm() {
         },
         body: JSON.stringify({
             names: names,
-            count: parseInt(numberInput)
+            count: count
         })
     });
 
     const result = await response.json();
-
-    // Display the result
     displayResult(result.randomChoices);
 }
 
@@ -60,13 +69,15 @@ async function submitForm() {
 function displayResult(randomChoices) {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = ''; // Clear previous results
+    resultDiv.style.color = '#333'; // Normal text color for valid result
 
+    // Extra Layer of Validation
     if (randomChoices.length === 0) {
-        resultDiv.innerHTML = 'No names were selected.';
+        resultDiv.style.color = 'red';
+        resultDiv.innerHTML = 'No names were selected';
         return;
     }
 
-    // Create an HTML list to display names and counts
     const ul = document.createElement('ul');
 
     randomChoices.forEach(randomChoice => {
