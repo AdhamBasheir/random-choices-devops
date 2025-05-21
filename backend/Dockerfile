@@ -14,9 +14,9 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 
 # ---------- Runtime Stage ----------
-# Minimal base image for static Go binaries (no shell, no extras)
-# Note: No CA certs included by default; add manually if needed
-FROM gcr.io/distroless/static
+# Minimal base image for static Go binaries
+# Note: This image does not include a shell or CA certificates
+FROM scratch
 
 # Copy binary from the builder
 COPY --from=builder /app/server /app/server
