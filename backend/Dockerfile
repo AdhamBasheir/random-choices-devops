@@ -1,24 +1,35 @@
-# Start from official Golang image
-FROM golang:1.24
+# ---------- Build Stage ----------
+FROM golang:1.24 AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy go.mod and go.sum
+# Only copy go.mod and go.sum first (leverage cache)
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy the rest of the code
+# Copy the rest of the source code
 COPY . .
 
-# Build the Go app
-RUN go build -o main .
+# Static build
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 
-# Set the default command to run the built binary
-CMD ["./main"]
+# ---------- Runtime Stage ----------
+# Minimal base image for static Go binaries (no shell, no extras)
+# Note: No CA certs included by default; add manually if needed
+FROM gcr.io/distroless/static
 
-# Expose the port your app listens on
+# Copy binary from the builder
+COPY --from=builder /app/server /app/server
+
+# Set working directory
+WORKDIR /app
+
+# Expose the port your Go server listens on
 EXPOSE 3000
+
+# Run the binary
+CMD ["./server"]
+
 
 # Run the following commands to build and run the Docker container:
 # docker build -t random-choice-devops-backend .
