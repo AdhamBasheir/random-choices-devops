@@ -79,6 +79,7 @@ function displayResult(randomChoices) {
     }
 
     const ul = document.createElement('ul');
+    ul.style.listStyleType = 'none';
 
     randomChoices.forEach(randomChoice => {
         const li = document.createElement('li');
