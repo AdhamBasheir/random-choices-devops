@@ -5,13 +5,19 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: main-gateway
-      namespace: default
+    - name: nginx-gateway
+      namespace: nginx-gateway
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /argocd
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /healthz
       backendRefs:
         - name: argocd-server
           port: 80

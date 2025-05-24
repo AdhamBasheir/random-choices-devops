@@ -6,12 +6,6 @@ module "gke" {
   location     = var.region
 }
 
-module "gateway" {
-  source                 = "../gateway"
-  cluster_endpoint       = module.gke.cluster_endpoint
-  cluster_ca_certificate = module.gke.cluster_ca_certificate
-}
-
 module "argocd" {
   source                 = "../argocd"
   cluster_endpoint       = module.gke.cluster_endpoint

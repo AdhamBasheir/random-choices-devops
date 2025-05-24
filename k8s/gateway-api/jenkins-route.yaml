@@ -5,8 +5,8 @@ metadata:
   namespace: jenkins
 spec:
   parentRefs:
-    - name: main-gateway
-      namespace: default
+    - name: nginx-gateway
+      namespace: nginx-gateway
   rules:
     - matches:
         - path:
