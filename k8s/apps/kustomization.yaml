@@ -1,0 +1,80 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - github.com/AdhamBasheir/k8s-kustomize-template//backend?ref=main
+  - github.com/AdhamBasheir/k8s-kustomize-template//frontend?ref=main
+
+namespace: random-choice     # Project namespace
+
+namePrefix: random-choice-   # Prefix added to resource names
+
+labels:
+  - pairs:
+      app: random-choice          # Application label
+    includeSelectors: true
+    includeTemplates: true
+
+patches:
+  # Frontend Deployment Patch
+  - patch: |-
+      - op: add
+        path: /spec/replicas
+        value: 2                      # Number of frontend replicas
+      - op: replace
+        path: /spec/template/spec/containers/0
+        value:
+          name: frontend-app          # Frontend container name
+          image: adhambasheir/random-choice-devops-frontend:latest  # Frontend Docker image
+          ports:
+            - containerPort: 80       # Frontend container port
+    target:
+      kind: Deployment
+      labelSelector: "tier=frontend"
+
+  # Frontend Service Patch
+  - patch: |-
+      - op: replace
+        path: /spec/ports/0
+        value:
+          protocol: TCP
+          port: 80                    # Frontend service port
+          targetPort: 80              # Frontend target port
+      - op: add
+        path: /spec/type
+        value: ClusterIP              # Frontend service type
+    target:
+      kind: Service
+      labelSelector: "tier=frontend"
+
+  # Backend Deployment Patch
+  - patch: |-
+      - op: add
+        path: /spec/replicas
+        value: 2                      # Number of backend replicas
+      - op: replace
+        path: /spec/template/spec/containers/0
+        value:
+          name: backend-api           # Backend container name
+          image: adhambasheir/random-choice-devops-backend:latest   # Backend Docker image
+          ports:
+            - containerPort: 3000     # Backend container port
+    target:
+      kind: Deployment
+      labelSelector: "tier=backend"
+
+  # Backend Service Patch
+  - patch: |-
+      - op: replace
+        path: /spec/ports/0
+        value:
+          protocol: TCP
+          port: 3000                  # Backend service port
+          targetPort: 3000            # Backend target port
+      - op: add
+        path: /spec/type
+        value: ClusterIP              # Backend service type
+    target:
+      kind: Service
+      labelSelector: "tier=backend"

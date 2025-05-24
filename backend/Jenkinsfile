@@ -1,0 +1,106 @@
+pipeline {
+  agent any
+
+  environment {
+    IMAGE_NAME    = "random-choice-devops-backend"
+    IMAGE_TAG     = "${GIT_COMMIT}"
+    PROJECT_ID    = "silver-agility-460013-n1"
+    GIT_REPO      = "https://github.com/AdhamBasheir/random-choices-devops.git"
+    WORKING_DIR   = './backend'
+    GCR_IMAGE    = "gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
+    DOCKERHUB_IMAGE    = "adhambasheir/${IMAGE_NAME}:${IMAGE_TAG}"
+    KUSTOMIZATION = "k8s/apps/kustomization.yaml"
+  }
+
+  stages {
+        stage('Clone Repo') {
+      steps {
+        git url: "$GIT_REPO", branch: 'main'
+      }
+    }
+
+    stage('Build Docker Image') {
+      steps {
+        script {
+            sh """
+            docker build -t $FULL_IMAGE $WORKING_DIR
+            """
+        }
+      }
+    }
+
+    stage('Push to Docker Hub') {
+      steps {
+        script {
+          sh """
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $FULL_IMAGE
+          """
+        }
+      }
+    }
+
+    // stage('Push to GCR') {
+    //   steps {
+    //     script {
+    //       sh """
+    //       gcloud auth configure-docker
+    //       docker push $GCR_IMAGE
+    //       """
+    //     }
+    //   }
+    // }
+
+    stage('Update Kustomization Patch') {
+      steps {
+        script {
+          def patchYaml = readFile("${KUSTOMIZATION}")
+          
+          def newYaml = patchYaml.replaceAll(
+            /^(\s*image:).*/,
+            "\$1 ${DOCKERHUB_IMAGE}"  // Replace the whole line with 'image: <new-image>'
+          )
+
+          writeFile file: "${KUSTOMIZATION}", text: newYaml
+        }
+
+        sh """
+        git config user.name "Jenkins CI"
+        git config user.email "adhambasheir000@gmail.com"
+        git add ${KUSTOMIZATION}
+        git commit -m "chore: update ${IMAGE_NAME} image to ${IMAGE_TAG}"
+        git push origin main
+        """
+      }
+    }
+
+    // stage('Remove Old Images from GCR') {
+    //   steps {
+    //     script {
+    //       // Fetch list of all image tags sorted by timestamp (oldest first)
+    //       def imageTags = sh(script: """
+    //         gcloud container images list-tags gcr.io/$PROJECT_ID/$IMAGE_NAME --sort-by=timestamp --format="get(tags)"
+    //       """, returnStdout: true).trim().split("\n")
+          
+    //       // Remove images older than the most recent image (keep only the latest)
+    //       def imageCount = 0
+    //       def maxImagesToKeep = 1  // Number of latest images to retain
+
+    //       // Loop through the tags and delete images older than the limit
+    //       for (tag in imageTags) {
+    //         imageCount += 1
+    //         if (imageCount <= (imageTags.size() - maxImagesToKeep)) {
+    //           echo "Deleting image: $tag"
+    //           sh """
+    //           gcloud container images delete gcr.io/$PROJECT_ID/$IMAGE_NAME:$tag --quiet --force-delete-tags
+    //           """
+    //         }
+    //         else {
+    //           break
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+  }
+}

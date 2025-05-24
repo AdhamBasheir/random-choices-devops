@@ -1,0 +1,7 @@
+server:
+  service:
+    type: clusterip
+    name: argocd-server
+configs:
+  timeout.reconciliation: 30s
+    

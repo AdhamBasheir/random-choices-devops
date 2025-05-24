@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: random-choice-gateway
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/AdhamBasheir/random-choices-devops.git'
+    targetRevision: HEAD
+    path: k8s/gateway-api
+    kustomize: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

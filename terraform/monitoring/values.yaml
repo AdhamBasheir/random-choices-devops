@@ -1,0 +1,17 @@
+prometheus:
+  service:
+    type: ClusterIP
+    name: prometheus-server
+
+grafana:
+  adminUser: admin
+  adminPassword: admin123
+  service:
+    type: clusterip
+    name: grafana-server
+  defaultDashboardsEnabled: true
+
+alertmanager:
+  service:
+    type: ClusterIP
+    name: alertmanager-server

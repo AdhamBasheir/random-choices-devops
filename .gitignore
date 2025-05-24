@@ -1,0 +1,6 @@
+# Terraform files
+.terraform/
+.terraform.lock.hcl
+
+# other files
+commands.txt

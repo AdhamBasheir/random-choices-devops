@@ -1,0 +1,56 @@
+pipeline {
+  agent any
+
+  environment {
+    GIT_REPO = "https://github.com/AdhamBasheir/random-choices-devops.git"
+    WORKING_DIR = './terraform/main'
+  }
+
+  stages {
+    stage('Clone Repo') {
+      steps {
+        git url: "$GIT_REPO", branch: 'main'
+      }
+    }
+
+    stage('Terraform Init') {
+      steps {
+        dir("${env.WORKING_DIR}") {
+          sh 'terraform init'
+        }
+      }
+    }
+
+    stage('Terraform Validate') {
+      steps {
+        dir("${env.WORKING_DIR}") {
+          sh 'terraform validate'
+        }
+      }
+    }
+
+    stage('Terraform Plan') {
+      steps {
+        dir("${env.WORKING_DIR}") {
+          sh 'terraform plan -out=tfplan'
+          sh 'terraform show -json tfplan > tfplan.json'
+          archiveArtifacts artifacts: 'tfplan.json', fingerprint: true
+        }
+      }
+    }
+
+    stage('Terraform Apply') {
+      steps {
+        dir("${env.WORKING_DIR}") {
+          sh 'terraform apply -auto-approve tfplan'
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      cleanWs()
+    }
+  }
+}
