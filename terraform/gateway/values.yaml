@@ -1,0 +1,5 @@
+gatewayController:
+  enabled: true
+envoy:
+  service:
+    type: LoadBalancer

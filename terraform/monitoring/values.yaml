@@ -7,7 +7,7 @@ grafana:
   adminUser: admin
   adminPassword: admin123
   service:
-    type: clusterip
+    type: ClusterIP
     name: grafana-server
   defaultDashboardsEnabled: true
 

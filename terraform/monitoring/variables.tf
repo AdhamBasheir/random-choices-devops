@@ -3,7 +3,7 @@ variable "namespace" {
 }
 
 variable "prometheus_chart_version" {
-  default = "58.6.2"
+  default = "59.0.0"
 }
 
 variable "cluster_endpoint" {}
