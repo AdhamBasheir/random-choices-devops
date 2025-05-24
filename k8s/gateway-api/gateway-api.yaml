@@ -4,7 +4,7 @@ metadata:
   name: main-gateway
   namespace: default
 spec:
-  gatewayClassName: traefik-gateway
+  gatewayClassName: contour
   listeners:
     - name: http
       port: 80
