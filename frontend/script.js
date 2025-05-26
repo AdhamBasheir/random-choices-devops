@@ -22,11 +22,10 @@ function resetForm() {
 function validateAndSubmit() {
     const numberInput = document.getElementById('number').value.trim();
     const resultDiv = document.getElementById('result');
-    resultDiv.style.color = 'red';
-
     const count = Number(numberInput);
 
     if (!Number.isInteger(count) || count <= 0) {
+        resultDiv.style.color = 'red'; // Change text color to red for invalid input
         resultDiv.innerHTML = 'The number must be a positive integer';
         return;
     }
@@ -68,12 +67,10 @@ async function submitForm(names, count) {
 // Function to display the result with name and count
 function displayResult(randomChoices) {
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ''; // Clear previous results
-    resultDiv.style.color = '#333'; // Normal text color for valid result
 
     // Extra Layer of Validation
     if (randomChoices.length === 0) {
-        resultDiv.style.color = 'red';
+        resultDiv.style.color = 'red'; // Change text color to red for no valid names
         resultDiv.innerHTML = 'No names were selected';
         return;
     }
@@ -88,5 +85,8 @@ function displayResult(randomChoices) {
         ul.appendChild(li);
     });
 
+    // Clear previous results and set text color
+    resultDiv.innerHTML = '';
+    resultDiv.style.color = '#333'; // Reset text color for valid input
     resultDiv.appendChild(ul);
 }

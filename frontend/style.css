@@ -107,16 +107,3 @@ button.reset:hover {
 input[type="text"]:not(:last-of-type) {
     margin-bottom: 10px;
 }
-
-input[type="number"] {
-    width: 80px;
-    margin-bottom: 20px;
-}
-
-button.reset {
-    background-color: #dc3545;
-}
-
-button.reset:hover {
-    background-color: #c82333;
-}
