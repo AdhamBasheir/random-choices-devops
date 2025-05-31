@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: frontend-monitor
+  name: prometheus-backend-service-monitor
   namespace: monitoring
   labels:
     release: kube-prometheus-stack
@@ -9,8 +9,8 @@ spec:
   selector:
     matchLabels:
       app: random-choice
-      tier: frontend
+      tier: backend
   endpoints:
-    - port: monitoring
+    - port: metrics
       path: /metrics
       interval: 30s
