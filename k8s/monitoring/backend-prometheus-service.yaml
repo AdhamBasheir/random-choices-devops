@@ -11,6 +11,6 @@ spec:
     app: random-choice
     tier: backend
   ports:
-    - name: monitoring
+    - name: metrics
       port: 8080
       targetPort: 8080

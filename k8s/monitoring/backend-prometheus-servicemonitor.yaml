@@ -11,6 +11,6 @@ spec:
       app: random-choice
       tier: backend
   endpoints:
-    - port: monitoring
+    - port: metrics
       path: /metrics
       interval: 30s

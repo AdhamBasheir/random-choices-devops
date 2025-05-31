@@ -16,7 +16,7 @@ spec:
         - type: URLRewrite
           urlRewrite:
             path:
-              type: Replaceprefix
+              type: ReplaceprefixMatch
               replacePrefix: /
       backendRefs:
         - name: random-choice-backend-service
