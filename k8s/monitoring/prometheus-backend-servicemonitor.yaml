@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-backend-service-monitor
-  namespace: random-choice
+  namespace: monitoring
   labels:
     release: kube-prometheus-stack
 spec:
@@ -10,6 +10,9 @@ spec:
     matchLabels:
       app: random-choice
       tier: backend
+  namespaceSelector:
+    matchNames:
+      - random-choice
   endpoints:
     - port: metrics
       path: /metrics
