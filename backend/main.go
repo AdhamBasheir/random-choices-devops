@@ -10,9 +10,6 @@ import (
 )
 
 func main() {
-	// Initialize the metrics
-	metrics.Init()
-
 	// Set up the route and handler
 	http.HandleFunc("/randomize", randomizer.RandomizeHandler)
 	// Set up the metrics endpoint
