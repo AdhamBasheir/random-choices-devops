@@ -1,5 +1,5 @@
 server:
   service:
-    type: ClusterIP
+    type: LoadBalancer
 configs:
   timeout.reconciliation: 30s

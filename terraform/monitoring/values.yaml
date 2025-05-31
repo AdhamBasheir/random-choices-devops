@@ -1,6 +1,6 @@
 prometheus:
   service:
-    type: ClusterIP
+    type: LoadBalancer
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
@@ -10,9 +10,9 @@ grafana:
   adminUser: admin
   adminPassword: admin123
   service:
-    type: ClusterIP
+    type: LoadBalancer
   defaultDashboardsEnabled: true
 
 alertmanager:
   service:
-    type: ClusterIP
+    type: LoadBalancer
