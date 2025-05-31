@@ -1,6 +1,5 @@
 server:
   service:
     type: ClusterIP
-    name: argocd-server
 configs:
   timeout.reconciliation: 30s

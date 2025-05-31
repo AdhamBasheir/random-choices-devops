@@ -1,8 +1,8 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: argocd-route
-  namespace: argocd
+  name: prometheus-route
+  namespace: monitoring
 spec:
   parentRefs:
     - name: nginx-gateway
@@ -11,7 +11,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /argocd
+            value: /prometheus
       filters:
         - type: URLRewrite
           urlRewrite:
@@ -19,5 +19,5 @@ spec:
               type: ReplaceFullPath
               replaceFullPath: /
       backendRefs:
-        - name: argocd-server
-          port: 80
+        - name: kube-prometheus-stack-prometheus
+          port: 9090

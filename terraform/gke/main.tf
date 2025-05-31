@@ -1,6 +1,6 @@
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
-  location = var.location
+  location = var.zone
   
   network    = "default"
   subnetwork = "default"
@@ -15,12 +15,12 @@ resource "google_container_cluster" "primary" {
     service_account = google_service_account.gke_service_account.email
   }
 
-  deletion_protection = false  # Add this line to disable deletion protection
+  deletion_protection = false
 }
 
 resource "google_container_node_pool" "default" {
   name       = "default-node-pool"
-  location   = var.location
+  location   = var.zone
   cluster    = google_container_cluster.primary.name
   node_count = var.node_count
 
@@ -42,39 +42,39 @@ resource "google_project_iam_member" "service_account_owner" {
   member  = "serviceAccount:${google_service_account.gke_service_account.email}"
 }
 
-resource "google_compute_firewall" "allow_http_https" {
-  name    = "allow-http-https-to-envoy"
-  network = "default"
+# resource "google_compute_firewall" "allow_http_https" {
+#   name    = "allow-http-https-to-envoy"
+#   network = "default"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["80", "443"]
+#   }
 
-  direction    = "INGRESS"
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["gke-node-tag"]
-  description = "Allow HTTP and HTTPS ingress to Envoy LoadBalancer"
-}
+#   direction    = "INGRESS"
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags = ["gke-node-tag"]
+#   description = "Allow HTTP and HTTPS ingress to Envoy LoadBalancer"
+# }
 
-resource "google_compute_firewall" "allow_internal" {
-  name    = "allow-internal"
-  network = "default"
+# resource "google_compute_firewall" "allow_internal" {
+#   name    = "allow-internal"
+#   network = "default"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["0-65535"]
-  }
-  allow {
-    protocol = "udp"
-    ports    = ["0-65535"]
-  }
-  allow {
-    protocol = "icmp"
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["0-65535"]
+#   }
+#   allow {
+#     protocol = "udp"
+#     ports    = ["0-65535"]
+#   }
+#   allow {
+#     protocol = "icmp"
+#   }
 
-  direction    = "INGRESS"
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["gke-node-tag"]
-  description = "Allow all internal traffic from anywhere"
-}
+#   direction    = "INGRESS"
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags = ["gke-node-tag"]
+#   description = "Allow all internal traffic from anywhere"
+# }

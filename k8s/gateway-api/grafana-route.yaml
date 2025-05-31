@@ -12,12 +12,12 @@ spec:
         - path:
             type: PathPrefix
             value: /grafana
-      # filters:
-      #   - type: URLRewrite
-      #     urlRewrite:
-      #       path:
-      #         type: ReplaceFullPath
-      #         replaceFullPath: /
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /
       backendRefs:
         - name: kube-prometheus-stack-grafana
           port: 80

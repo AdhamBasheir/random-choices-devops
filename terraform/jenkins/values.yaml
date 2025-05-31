@@ -1,6 +1,5 @@
 controller:
   serviceType: clusterip
-  name: jenkins-server
   adminUser: admin
   adminPassword: admin123
   installPlugins:

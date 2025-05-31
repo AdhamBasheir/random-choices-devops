@@ -1,17 +1,18 @@
 prometheus:
   service:
     type: ClusterIP
-    name: prometheus-server
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
 
 grafana:
   adminUser: admin
   adminPassword: admin123
   service:
     type: ClusterIP
-    name: grafana-server
   defaultDashboardsEnabled: true
 
 alertmanager:
   service:
     type: ClusterIP
-    name: alertmanager-server

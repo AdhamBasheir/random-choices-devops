@@ -12,6 +12,12 @@ spec:
         - path:
             type: PathPrefix
             value: /api
+      # filters:
+      #   - type: URLRewrite
+      #     urlRewrite:
+      #       path:
+      #         type: Replaceprefix
+      #         replacePrefix: /
       backendRefs:
         - name: random-choice-backend-service
           port: 3000
