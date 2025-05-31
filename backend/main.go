@@ -12,6 +12,8 @@ import (
 func main() {
 	// Set up the route and handler
 	http.HandleFunc("/randomize", randomizer.RandomizeHandler)
+	// Initialize the metrics
+	metrics.Init()
 	// Set up the metrics endpoint
 	http.Handle("/metrics", metrics.MetricsHandler())
 
