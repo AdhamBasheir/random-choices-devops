@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"random-choice/metrics"
 	"random-choice/randomizer"
 
 	"github.com/rs/cors"
@@ -10,7 +11,9 @@ import (
 
 func main() {
 	// Set up the route and handler
-	http.HandleFunc("/api/randomize", randomizer.RandomizeHandler)
+	http.HandleFunc("/randomize", randomizer.RandomizeHandler)
+	// Set up the metrics endpoint
+	http.Handle("/metrics", metrics.MetricsHandler())
 
 	// CORS setup
 	corsHandler := cors.New(cors.Options{

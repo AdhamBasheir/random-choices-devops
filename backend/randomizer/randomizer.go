@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+	"random-choice/metrics"
 	"slices"
 	"strings"
 	"time"
@@ -27,6 +28,9 @@ type NameFrequency struct {
 
 // RandomizeHandler handles the randomization API request
 func RandomizeHandler(w http.ResponseWriter, r *http.Request) {
+	// Increment the metric for randomize requests
+	metrics.RandomizeRequests.Inc()
+
 	// Decode the incoming request
 	var requestData RequestData
 	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
