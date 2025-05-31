@@ -16,8 +16,8 @@ spec:
         - type: URLRewrite
           urlRewrite:
             path:
-              type: ReplaceprefixMatch
-              replacePrefix: /
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
       backendRefs:
         - name: random-choice-backend-service
           port: 3000
