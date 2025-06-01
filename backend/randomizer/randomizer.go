@@ -3,6 +3,7 @@ package randomizer
 import (
 	"cmp"
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/http"
 	"random-choice/metrics"
@@ -28,6 +29,8 @@ type NameFrequency struct {
 
 // RandomizeHandler handles the randomization API request
 func RandomizeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Received request to /randomize")
+
 	// Increment the metric for randomize requests
 	metrics.RandomizeRequests.Inc()
 
@@ -43,6 +46,12 @@ func RandomizeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Convert to NameFrequency and sort
 	nameFrequencyList := SortNameFrequencies(nameCounts)
+
+	// debug output
+	fmt.Printf("Received names: %v\n", requestData.Names)
+	fmt.Printf("Count: %d\n", requestData.Count)
+	fmt.Printf("Randomized names: %v\n", nameFrequencyList)
+	// debug output end
 
 	// Respond with sorted name frequencies
 	responseData := ResponseData{RandomChoices: nameFrequencyList}
