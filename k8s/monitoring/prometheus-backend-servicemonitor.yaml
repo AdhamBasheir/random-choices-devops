@@ -8,12 +8,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: random-choice
+      # app: random-choice
       tier: backend
   namespaceSelector:
-    matchNames:
-      - random-choice
+    matchNames: 
+      - {}
+      # - random-choice
   endpoints:
     - port: metrics
       path: /metrics
-      interval: 30s
+      # interval: 30s

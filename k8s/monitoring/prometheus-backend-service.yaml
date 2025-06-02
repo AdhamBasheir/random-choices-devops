@@ -2,15 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus-backend-service
-  namespace: random-choice
+  # namespace: random-choice
   labels:
-    app: random-choice
+    # app: random-choice
     tier: backend
 spec:
   selector:
-    app: random-choice
+    # app: random-choice
     tier: backend
   ports:
     - name: metrics
       port: 8080
-      targetPort: 3000
+      # targetPort: 3000
