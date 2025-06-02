@@ -12,7 +12,7 @@ stringData:
     global:
       smtp_smarthost: 'smtp.gmail.com:587'
       smtp_from: 'manageralert8@gmail.com'
-      smtp_auth_username: 'alert manager'
+      smtp_auth_username: 'manageralert8@gmail.com'
       smtp_auth_password: 'alert_alert'
       smtp_require_tls: true
 
