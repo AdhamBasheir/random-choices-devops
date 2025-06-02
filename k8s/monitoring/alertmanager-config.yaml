@@ -11,9 +11,9 @@ stringData:
   alertmanager.yaml: |
     global:
       smtp_smarthost: 'smtp.gmail.com:587'
-      smtp_from: 'your-email@gmail.com'
-      smtp_auth_username: 'your-email@gmail.com'
-      smtp_auth_password: 'your-app-password'
+      smtp_from: 'manageralert8@gmail.com'
+      smtp_auth_username: 'alert manager'
+      smtp_auth_password: 'alert_alert'
       smtp_require_tls: true
 
     route:
