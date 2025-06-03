@@ -7,7 +7,7 @@ output "cluster_location" {
 }
 
 output "cluster_endpoint" {
-  value = google_container_cluster.primary.endpoint
+  value = "https://${google_container_cluster.primary.endpoint}"
 }
 
 output "cluster_ca_certificate" {
