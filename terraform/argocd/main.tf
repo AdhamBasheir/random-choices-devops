@@ -12,10 +12,6 @@ resource "helm_release" "argocd" {
   ]
 }
 
-# resource "kubernetes_manifest" "argocd_application" {
-#   manifest = yamldecode(data.local_file.argocd_application_yaml.content)
-# }
-
-# resource "kubernetes_manifest" "argocd_gateway_api" {
-#   manifest = yamldecode(data.local_file.argocd_gateway-api_yaml.content)
+# resource "kubernetes_manifest" "app_of_apps" {
+#   manifest = yamldecode(data.local_file.app_of_apps.content)
 # }
