@@ -11,7 +11,7 @@ spec:
       # app: random-choice
       tier: backend
   namespaceSelector:
-    matchNames: 
+    matchNames:
       - {}
       # - random-choice
   endpoints:

@@ -6,13 +6,13 @@ resources:
   - github.com/AdhamBasheir/k8s-kustomize-template//backend?ref=main
   - github.com/AdhamBasheir/k8s-kustomize-template//frontend?ref=main
 
-namespace: random-choice     # Project namespace
+namespace: random-choice # Project namespace
 
-namePrefix: random-choice-   # Prefix added to resource names
+namePrefix: random-choice- # Prefix added to resource names
 
 labels:
   - pairs:
-      app: random-choice          # Application label
+      app: random-choice # Application label
     includeSelectors: true
     includeTemplates: true
 
