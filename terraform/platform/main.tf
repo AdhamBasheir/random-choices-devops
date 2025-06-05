@@ -8,12 +8,20 @@ terraform {
   }
 }
 
-module "main" {
-  source = "./main"
+module "argocd" {
+  source                 = "./modules/argocd"
+  cluster_endpoint       = local.cluster_endpoint
+  cluster_ca_certificate = local.cluster_ca_certificate
 }
 
-// output.tf
-output "argocd_admin_password" {
-  value       = "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
-  description = "Command to retrieve the initial admin password for ArgoCD"
+# module "jenkins" {
+#   source                 = "./modules/jenkins"
+#   cluster_endpoint       = local.cluster_endpoint
+#   cluster_ca_certificate = local.cluster_ca_certificate
+# }
+
+module "monitoring" {
+  source                 = "./modules/monitoring"
+  cluster_endpoint       = local.cluster_endpoint
+  cluster_ca_certificate = local.cluster_ca_certificate
 }
