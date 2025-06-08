@@ -5,16 +5,53 @@ metadata:
   namespace: nginx-gateway
 spec:
   gatewayClassName: nginx
+  # addresses:
+  #   - type: IPAddress
+  #     value: 104.198.170.9
+  #   - type: Hostname
+  #     value: noodleblitz.space
   listeners:
-    - name: http
+    - name: root-http
+      hostname: noodleblitz.space
       port: 80
       protocol: HTTP
       allowedRoutes:
         namespaces:
           from: All
-    # - name: https
-    #   port: 443
-    #   protocol: HTTPS
-    #   allowedRoutes:
-    #     namespaces:
-    #       from: All
+    - name: root-https
+      hostname: noodleblitz.space
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: noodleblitz-root-tls
+            kind: Secret
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: services-http
+      hostname: services.noodleblitz.space
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: services-https
+      hostname: services.noodleblitz.space
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: noodleblitz-services-tls
+            kind: Secret
+      allowedRoutes:
+        namespaces:
+          from: All
+# status:
+#   addresses:
+#   - type: IPAddress
+#     value: 104.198.170.9
+#   - type: Hostname
+#     value: noodleblitz.space

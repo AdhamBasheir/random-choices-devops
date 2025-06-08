@@ -5,6 +5,8 @@ resources:
   - https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard?ref=v1.6.2
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.6.2/deploy/crds.yaml
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.6.2/deploy/default/deploy.yaml
+  - noodleblitz-root-secret.yaml
+  - noodleblitz-services-secret.yaml
   - gateway.yaml
   - backend-route.yaml
   - frontend-route.yaml
@@ -13,3 +15,13 @@ resources:
   # - grafana-route.yaml
   # - alertmanager-route.yaml
   # - jenkins-route.yaml
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/loadBalancerIP
+        value: 104.198.170.9
+    target:
+      kind: Service
+      name: nginx-gateway
+      namespace: nginx-gateway

@@ -4,5 +4,8 @@
 terraform.*
 secrets/
 
+# VScode files
+.vscode
+
 # other files
 commands.txt

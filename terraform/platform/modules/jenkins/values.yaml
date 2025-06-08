@@ -1,5 +1,5 @@
 controller:
-  serviceType: clusterip
+  serviceType: ClusterIP
   adminUser: admin
   adminPassword: admin123
   installPlugins:
