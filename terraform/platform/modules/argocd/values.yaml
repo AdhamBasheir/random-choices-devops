@@ -2,4 +2,9 @@ server:
   service:
     type: LoadBalancer
 configs:
+  secret:
+    argocdServerAdminPassword: "$2a$10$LVspxIzpEtM3dEVR/Fx33uSgKfFGhah.QxiPLFKqvbaIPnSaRI92G" #password
+  admin:
+    passwordSecret:
+      createSecret: false
   timeout.reconciliation: 30s
