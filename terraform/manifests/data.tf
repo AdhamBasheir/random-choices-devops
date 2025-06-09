@@ -26,6 +26,6 @@ data "local_file" "app_of_apps" {
   filename = "${path.module}/argocd.yaml"
 }
 
-data "local_file" "cert" {
-  filename = "${path.module}/cert.yaml"
-}
+# data "local_file" "cert" {
+#   filename = "${path.module}/cert.yaml"
+# }
