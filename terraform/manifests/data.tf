@@ -25,7 +25,3 @@ data "terraform_remote_state" "platform" {
 data "local_file" "app_of_apps" {
   filename = "${path.module}/argocd.yaml"
 }
-
-# data "local_file" "cert" {
-#   filename = "${path.module}/cert.yaml"
-# }
