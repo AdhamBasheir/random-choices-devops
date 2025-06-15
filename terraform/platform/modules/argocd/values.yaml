@@ -1,6 +1,22 @@
+global:
+  domain: services.noodleblitz.space
+
 server:
   service:
-    type: LoadBalancer
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: gateway.k8s.io
+    # annotations:
+    #   cert-manager.io/cluster-issuer: "letsencrypt"
+    hostname: services.noodleblitz.space
+    path: /argocd
+    pathType: Prefix
+    tls:
+      - hosts:
+          - /argocd
+        secretName: noodleblitz-services-tls
+
 configs:
   secret:
     argocdServerAdminPassword: "$2a$10$LVspxIzpEtM3dEVR/Fx33uSgKfFGhah.QxiPLFKqvbaIPnSaRI92G" #password

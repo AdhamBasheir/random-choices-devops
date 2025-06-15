@@ -1,18 +1,57 @@
 prometheus:
   service:
-    type: LoadBalancer
+    type: ClusterIP
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}
+  ingress:
+    enabled: true
+    ingressClassName: gateway.k8s.io
+    # annotations:
+    #   cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+      - services.noodleblitz.space
+    paths:
+      - /prometheus
+    tls:
+      - secretName: noodleblitz-services-tls
+        hosts:
+          - services.noodleblitz.space
 
 grafana:
   adminUser: admin
   adminPassword: password
   service:
-    type: LoadBalancer
+    type: ClusterIP
   defaultDashboardsEnabled: true
+  ingress:
+    enabled: true
+    ingressClassName: gateway.k8s.io
+    # annotations:
+    #   cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+      - services.noodleblitz.space
+    paths:
+      - /grafana
+    tls:
+      - secretName: noodleblitz-services-tls
+        hosts:
+          - services.noodleblitz.space
 
 alertmanager:
   service:
-    type: LoadBalancer
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: gateway.k8s.io
+    # annotations:
+    #   cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+      - services.noodleblitz.space
+    paths:
+      - /alertmanager
+    tls:
+      - secretName: noodleblitz-services-tls
+        hosts:
+          - services.noodleblitz.space
