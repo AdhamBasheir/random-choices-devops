@@ -10,10 +10,10 @@ resources:
   - gateway.yaml
   - backend-route.yaml
   - frontend-route.yaml
-  # - argocd-route.yaml
-  # - prometheus-route.yaml
-  # - grafana-route.yaml
-  # - alertmanager-route.yaml
+  - argocd-route.yaml
+  - prometheus-route.yaml
+  - grafana-route.yaml
+  - alertmanager-route.yaml
   # - jenkins-route.yaml
 
 patches:
