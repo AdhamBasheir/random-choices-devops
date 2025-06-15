@@ -13,7 +13,7 @@ prometheus:
     hosts:
       - services.noodleblitz.space
     paths:
-      - /prometheus
+      - /
     tls:
       - secretName: noodleblitz-services-tls
         hosts:
@@ -33,7 +33,7 @@ grafana:
     hosts:
       - services.noodleblitz.space
     paths:
-      - /grafana
+      - /
     tls:
       - secretName: noodleblitz-services-tls
         hosts:
@@ -50,7 +50,7 @@ alertmanager:
     hosts:
       - services.noodleblitz.space
     paths:
-      - /alertmanager
+      - /
     tls:
       - secretName: noodleblitz-services-tls
         hosts:

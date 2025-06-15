@@ -10,11 +10,11 @@ server:
     # annotations:
     #   cert-manager.io/cluster-issuer: "letsencrypt"
     hostname: services.noodleblitz.space
-    path: /argocd
+    path: /
     pathType: Prefix
     tls:
       - hosts:
-          - /argocd
+          - services.noodleblitz.space
         secretName: noodleblitz-services-tls
 
 configs:
