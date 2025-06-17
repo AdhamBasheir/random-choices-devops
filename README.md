@@ -41,8 +41,8 @@ terraform/
 │ └── main.tf
 ├── platform/ # Helm charts, ArgoCD, monitoring stack, etc.
 │ └── main.tf
-└── manifests/ # Application Kubernetes manifests
-└── main.tf
+├── manifests/ # Application Kubernetes manifests
+│ └── main.tf
 ```
 
 ## 🚀 Getting Started
