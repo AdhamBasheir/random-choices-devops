@@ -63,7 +63,7 @@ You can apply only infra and allow Terraform Cloud to trigger the rest of the st
 ### 3. Use the CLI Tool
 You can simplify the whole process using the [terraform-batch CLI tool](https://github.com/AdhamBasheir/terraform-batch.git).
 ```bash
-terraform-batch apply infra platform manifests
+terraform-batch -dir=infra,platform,manifests apply -auto-approve
 ```
 
 ## 📊 Monitoring
