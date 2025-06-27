@@ -25,7 +25,18 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: "${{ vars.GO_VERSION }}"
-        cache: true
+    
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ vars.GO_VERSION }}-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-${{ vars.GO_VERSION }}-
+          ${{ runner.os }}-go-
+          ${{ runner.os }}-
 
     - name: Build
       working-directory: ./backend

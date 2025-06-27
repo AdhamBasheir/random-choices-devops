@@ -15,7 +15,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -installsuff
 
 # ---------- Runtime Stage ----------
 # Minimal base image for static Go binaries
-# Note: This image does not include a shell or CA certificates
+# Note: This image does not include a shell nor CA certificates
 FROM scratch
 
 # Copy binary from the builder
