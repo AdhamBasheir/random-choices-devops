@@ -42,7 +42,8 @@ func RandomizeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Randomize names and get frequency counts
-	nameCounts := RandomizeNames(requestData.Names, requestData.Count)
+	randGen := rand.New(rand.NewSource(time.Now().UnixNano()))
+	nameCounts := RandomizeNames(requestData.Names, requestData.Count, randGen)
 
 	// Convert to NameFrequency and sort
 	nameFrequencyList := SortNameFrequencies(nameCounts)
@@ -62,11 +63,9 @@ func RandomizeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // RandomizeNames picks random names and counts their frequency
-func RandomizeNames(names []string, count int) map[string]int {
-	randGen := rand.New(rand.NewSource(time.Now().UnixNano()))
+func RandomizeNames(names []string, count int, randGen *rand.Rand) map[string]int {
 	nameCounts := make(map[string]int)
 
-	// Pick random names 'Count' times
 	for range count {
 		randomIndex := randGen.Intn(len(names))
 		selectedName := names[randomIndex]

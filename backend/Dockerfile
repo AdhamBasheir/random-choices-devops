@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 
 # Static build
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -installsuffix cgo -trimpath -o server .
 
 # ---------- Runtime Stage ----------
 # Minimal base image for static Go binaries
