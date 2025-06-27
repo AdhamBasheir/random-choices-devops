@@ -1,6 +1,7 @@
 name: Frontend Docker Image CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
