@@ -21,6 +21,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Confirm go.sum exists before caching
+      run: ls -l backend/go.sum
+
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
